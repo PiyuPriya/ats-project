@@ -1,0 +1,22 @@
+resources:
+  jobs:
+    test_cleanup:
+      name: test_cleanup
+      tasks:
+        - task_key: run_test_cleanup
+          notebook_task:
+            notebook_path: ../src/05-Cleanup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+      queue:
+        enabled: true
+      parameters:
+        - name: Environment
+          default: ${var.target_catalog}
+        - name: db
+          default: ${var.target_db}
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "4"
+      performance_target: PERFORMANCE_OPTIMIZED

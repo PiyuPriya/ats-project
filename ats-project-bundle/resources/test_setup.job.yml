@@ -1,0 +1,22 @@
+resources:
+  jobs:
+    test_setup:
+      name: test_setup
+      tasks:
+        - task_key: run_setup_and_validation
+          notebook_task:
+            notebook_path: ../src/02-Setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+      queue:
+        enabled: true
+      parameters:
+        - name: Environment
+          default: ${var.target_catalog}
+        - name: db
+          default: ${var.target_db}
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "4"
+      performance_target: PERFORMANCE_OPTIMIZED
