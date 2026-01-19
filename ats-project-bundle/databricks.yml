@@ -5,6 +5,8 @@ bundle:
 include:
   - resources/test_setup.job.yml
   - resources/test_cleanup.job.yml
+  - resources/integration_test.job.yml
+  - resources/gold_test.job.yml
   
 variables:
   target_catalog:
@@ -14,6 +16,10 @@ variables:
   target_db:
     description: The database name of the target environment
     default: ats_db
+
+  test_iter:
+    description: Thes test run iteration number
+    default: 1
 
 
 targets:

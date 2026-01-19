@@ -1,0 +1,24 @@
+resources:
+  jobs:
+    integration_test:
+      name: integration_test
+      tasks:
+        - task_key: run_integration_test
+          notebook_task:
+            notebook_path: ../src/13-DataPrepIntegrationTest.ipynb
+            source: WORKSPACE
+          environment_key: run_integration_test_environment
+      queue:
+        enabled: true
+      parameters:
+        - name: Iteration
+          default: ${var.test_iter}
+      environments:
+        - environment_key: run_integration_test_environment
+          spec:
+            dependencies:
+              - databricks-vectorsearch
+              - pymupdf == 1.24.13
+              - pymupdf4llm == 0.0.5
+            environment_version: "4"
+      performance_target: PERFORMANCE_OPTIMIZED
