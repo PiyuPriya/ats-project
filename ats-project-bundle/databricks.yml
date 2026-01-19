@@ -1,0 +1,42 @@
+# Databricks Asset Bundle configuration, more info here: https://docs.databricks.com/en/dev-tools/bundles/settings.html
+bundle:
+  name: "ats-project-bundle"
+
+include:
+  - resources/test_setup.job.yml
+  - resources/test_cleanup.job.yml
+  - resources/integration_test.job.yml
+  - resources/gold_test.job.yml
+  
+variables:
+  target_catalog:
+    description: The catalog name of the target environment
+    default : ats_dev
+
+  target_db:
+    description: The database name of the target environment
+    default: ats_db
+
+  test_iter:
+    description: Thes test run iteration number
+    default: 1
+
+
+targets:
+  # The 'dev' target, for development purposes. This target is the default.
+  dev:
+    default: true
+    workspace:
+      host: https://dbc-6f101de0-0bed.cloud.databricks.com
+      root_path: /Workspace/Users/${workspace.current_user.userName}/${bundle.target}/${bundle.name}
+
+  # The 'prod' target, used for production deployment.
+  uat:
+    workspace:
+      host: https://dbc-6f101de0-0bed.cloud.databricks.com
+      root_path: /Workspace/Users/${workspace.current_user.userName}/${bundle.target}/${bundle.name}
+    variables:
+      target_catalog: ats_uat
+      target_db: ats_db
+
+

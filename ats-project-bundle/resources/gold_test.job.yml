@@ -1,0 +1,24 @@
+resources:
+  jobs:
+    gold_test:
+      name: gold_test
+      tasks:
+        - task_key: run_gold_test_cluster
+          notebook_task:
+            notebook_path: ../src/12-ProfileSearch.ipynb
+            source: WORKSPACE
+          environment_key: run_gold_test_cluster_environment
+      queue:
+        enabled: true
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "4"
+        - environment_key: run_gold_test_cluster_environment
+          spec:
+            dependencies:
+              - databricks-vectorsearch
+              - pymupdf == 1.24.13
+              - pymupdf4llm == 0.0.5
+            environment_version: "4"
+      performance_target: PERFORMANCE_OPTIMIZED
